@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 from odoo.exceptions import UserError
 
 
@@ -7,6 +7,7 @@ class StockMoveLine(models.Model):
 
     qty_on_hand = fields.Float(compute='compute_qty_on_hand', string='Cantidad disponible')
 
+    @api.onchange('product_id', 'location_id')
     def compute_qty_on_hand(self):
         for picking_id in self:
             if picking_id and picking_id.location_id and picking_id.product_id:
