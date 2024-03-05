@@ -16,11 +16,12 @@ class StockMoveLine(models.Model):
             if qty_done != 0 and product_id and location_id:
                 available_qty = self.env["stock.quant"].\
                     _get_available_quantity(product_id, location_id)
-                if available_qty <= 0:
-                    raise UserError(f"No hay en stock cantidad disponible de productos: "
-                                    f"{product_id.display_name}")
-                elif available_qty == qty_done or available_qty <= qty_done:
-                    val['qty_done'] = available_qty
+                if self._context.get('active_model') == 'stock.picking.type':
+                    if available_qty <= 0:
+                        raise UserError(f"No hay en stock cantidad disponible de productos: "
+                                        f"{product_id.display_name}")
+                    elif available_qty == qty_done or available_qty <= qty_done:
+                        val['qty_done'] = available_qty
         return super(StockMoveLine, self).create(vals)
 
     @api.onchange('product_id', 'location_id')
