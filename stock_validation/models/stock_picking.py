@@ -28,8 +28,7 @@ class Picking(models.Model):
                                 available_qty = self.env["stock.quant"].\
                                     _get_available_quantity(product_id, location_id)
                                 if available_qty <= 0:
-                                    raise UserError(f"No hay en stock cantidad disponible de productos: "
-                                                    f"{product_id.display_name}")
+                                    val[2]['qty_done'] = 0
                                 elif available_qty == qty_done or available_qty <= qty_done:
                                     val[2]['qty_done'] = available_qty
         return super(Picking, self).write(vals)
