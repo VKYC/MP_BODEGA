@@ -31,7 +31,6 @@ class StockMoveLine(models.Model):
                     _get_available_quantity(picking_id.product_id, picking_id.location_id)
                 if picking_id.product_id and picking_id.location_id:
                     if available_qty <= 0:
-                        picking_id.qty_done = 0
                         picking_id.qty_on_hand = 0
                     elif available_qty == picking_id.qty_done or available_qty <= picking_id.qty_done:
                         picking_id.qty_done = available_qty
