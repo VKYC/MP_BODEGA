@@ -32,6 +32,6 @@ class Picking(models.Model):
                                 elif available_qty == qty_done or available_qty <= qty_done:
                                     val[2]['qty_done'] = available_qty
         res = super(Picking, self).write(vals)
-        if self.location_id == self.location_dest_id:
+        if self.location_id and self.location_dest_id and self.location_id == self.location_dest_id:
             raise UserError(f"No pueden ser las mismas ubicaciones de origen y destino")
         return res
