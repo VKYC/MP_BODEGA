@@ -10,17 +10,18 @@ class StockMoveLine(models.Model):
     @api.model_create_multi
     def create(self, vals):
         for val in vals:
-            qty_done = val['qty_done']
-            product_id = self.env['product.product'].search([('id', '=', val['product_id'])])
-            location_id = self.env['stock.location'].search([('id', '=', val['location_id'])])
-            if qty_done != 0 and product_id and location_id:
-                available_qty = self.env["stock.quant"].\
-                    _get_available_quantity(product_id, location_id)
-                if self._context.get('active_model') == 'stock.picking.type':
-                    if available_qty <= 0:
-                        val['qty_done'] = 0
-                    elif available_qty == qty_done or available_qty <= qty_done:
-                        val['qty_done'] = available_qty
+            if 'qty_done' in vals:
+                qty_done = val['qty_done']
+                product_id = self.env['product.product'].search([('id', '=', val['product_id'])])
+                location_id = self.env['stock.location'].search([('id', '=', val['location_id'])])
+                if qty_done != 0 and product_id and location_id:
+                    available_qty = self.env["stock.quant"].\
+                        _get_available_quantity(product_id, location_id)
+                    if self._context.get('active_model') == 'stock.picking.type':
+                        if available_qty <= 0:
+                            val['qty_done'] = 0
+                        elif available_qty == qty_done or available_qty <= qty_done:
+                            val['qty_done'] = available_qty
         return super(StockMoveLine, self).create(vals)
 
     @api.onchange('product_id', 'location_id')
