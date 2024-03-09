@@ -7,6 +7,13 @@ class StockMoveLine(models.Model):
 
     qty_on_hand = fields.Float(compute='compute_qty_on_hand', string='Cantidad disponible')
 
+    @api.onchange('qty_done')
+    def onchange_qty_done(self):
+        for line_id in self:
+            if line_id.product_id and line_id.qty_done == 0:
+                raise UserError(f"No puede ser la cantidad de la demanda 0 para el producto: "
+                                f"{line_id.product_id.display_name}")
+
     @api.model_create_multi
     def create(self, vals):
         for val in vals:
@@ -19,9 +26,8 @@ class StockMoveLine(models.Model):
                         _get_available_quantity(product_id, location_id)
                     if self._context.get('active_model') == 'stock.picking.type':
                         if available_qty <= 0:
-                            raise UserError(f"No hay en stock cantidad disponible de productos: "
-                                            f"{product_id.display_name}")
                             val['qty_done'] = 0
+                            raise UserError(f"No puede ser la cantidad de la demanda 0")
                         elif available_qty == qty_done or available_qty <= qty_done:
                             val['qty_done'] = available_qty
         return super(StockMoveLine, self).create(vals)
