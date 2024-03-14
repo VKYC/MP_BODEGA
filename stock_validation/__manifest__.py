@@ -9,7 +9,7 @@
     'category': 'Stock',
     'version': '15.0.0.0.1',
 
-    'depends': ['stock'],
+    'depends': ['stock', 'stock_analytic'],
 
     'data': [
         'views/stock_picking_views.xml',
