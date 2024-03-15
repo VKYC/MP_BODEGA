@@ -7,11 +7,13 @@
     'website': "corner.store59@gmail.com",
 
     'category': 'Stock',
-    'version': '15.0.0.0.1',
+    'version': '15.0.0.0.2',
 
     'depends': ['stock', 'stock_analytic'],
 
     'data': [
+        'security/ir.model.access.csv',
         'views/stock_picking_views.xml',
+        'wizard/stock_report_views_wizard.xml'
     ],
 }
