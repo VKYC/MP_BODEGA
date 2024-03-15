@@ -16,12 +16,13 @@ class StockReportWizard(models.TransientModel):
         new_date = last_day_previous_month.replace(day=self.date_report.day)
         action = {
             'name': f'Informe analisis inventario: De la fecha'
-                    f' {self.date_report.strftime("%d-%m-%Y")} a {new_date.strftime("%d-%m-%Y")}',
+                    f' {new_date.strftime("%d-%m-%Y")} a {self.date_report.strftime("%d-%m-%Y")}',
             'view_type': 'tree',
             'view_mode': 'list',
+            'view_id': self.env.ref('stock.view_stock_quant_tree').id,
             'res_model': 'stock.quant',
             'type': 'ir.actions.act_window',
-            'domain': [('in_date', '>=', new_date), ('in_date', '<=', new_date)],
+            'domain': [('in_date', '>=', new_date), ('in_date', '<=', self.date_report)],
             'context': {'create': False},
         }
 
