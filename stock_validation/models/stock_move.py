@@ -21,7 +21,7 @@ class StockMove(models.Model):
                     if picking_id.product_id and picking_id.location_id:
                         if available_qty <= 0:
                             picking_id.qty_on_hand = 0
-                        elif available_qty == picking_id.qty_done or available_qty <= picking_id.qty_done:
+                        elif available_qty == picking_id.quantity_done or available_qty <= picking_id.quantity_done:
                             picking_id.quantity_done = available_qty
                             picking_id.qty_on_hand = available_qty
                         else:
