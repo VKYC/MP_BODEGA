@@ -6,7 +6,7 @@ class StockMoveLine(models.Model):
     _inherit = 'stock.move.line'
 
     qty_on_hand = fields.Float(compute='compute_qty_on_hand', string='Cantidad disponible')
-    analytic_tag_ids = fields.Many2many('account.analytic.tag', string='Tags Analiticas',
+    analytic_tag_ids = fields.Many2many('account.analytic.tag', string='Etiquetas Analiticas',
                                         store=True, readonly=False, check_company=True, copy=True)
 
     @api.model_create_multi
