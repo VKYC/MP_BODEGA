@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="location_report_search_view" model="ir.ui.view">
+        <field name="name">stock.location.search</field>
+        <field name="model">stock.location</field>
+        <field eval="10" name="priority"/>
+        <field name="arch" type="xml">
+            <search>
+                <group expand='0' string='Filters'>
+                    <separator/>
+                    <filter name="filter_in_date" date="in_date"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="stock_location_report_tree" model="ir.ui.view">
+        <field name="name">stock.location.tree</field>
+        <field name="model">stock.location</field>
+        <field name="priority" eval="2"/>
+        <field name="arch" type="xml">
+            <tree string="Stock Location" decoration-info="usage=='view'" decoration-danger="usage=='internal'" create="false" multi_edit="1">
+                <field name="active" invisible="1"/>
+                <field name="show_in_report" invisible="1"/>
+                <field name="in_date"/>
+                <field name="complete_name" string="Location"/>
+                <field name="usage"/>
+                <field name="storage_category_id" attrs="{'readonly': [('usage', '!=', 'internal')]}" groups="stock.group_stock_storage_categories"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+    <record id="open_view_location_report" model="ir.actions.act_window">
+        <field name="name">Ubicaciones sin movimiento</field>
+        <field name="res_model">stock.location</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="stock_location_report_tree"/>
+        <field name="domain">[('location_id', '=', 7)]</field>
+    </record>
+    <menuitem
+        action="open_view_location_report"
+        id="menu_view_open_view_location_report"
+        parent="stock.menu_stock_config_settings"
+        sequence="55"
+        groups="stock.group_stock_manager"
+    />
+</odoo>
