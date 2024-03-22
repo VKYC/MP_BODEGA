@@ -7,8 +7,10 @@
         <field name="arch" type="xml">
             <tree string="Stock Location" decoration-info="usage=='view'" decoration-danger="usage=='internal'" create="false" multi_edit="1">
                 <field name="active" invisible="1"/>
-                <field name="show_in_report" invisible="1"/>
+<!--                <field name="show_in_report" invisible="1"/>-->
                 <field name="in_date"/>
+                <field name="filter_init_date"/>
+                <field name="filter_end_date"/>
                 <field name="complete_name" string="Location"/>
                 <field name="usage"/>
                 <field name="storage_category_id" attrs="{'readonly': [('usage', '!=', 'internal')]}" groups="stock.group_stock_storage_categories"/>
@@ -36,7 +38,11 @@
         <field name="view_mode">tree</field>
         <field name="view_id" ref="stock_location_report_tree"/>
         <field name="target">current</field>
-        <field name="domain">[('complete_name', 'ilike', 'Holdc/stock%')]</field>
+        <field name="domain">[
+            ('complete_name', 'ilike', 'Holdc/stock%'),
+            ('in_date', '>=', filter_init_date),
+            ('in_date', '&lt;=', filter_end_date),
+        ]</field>
         <field name="context">{
             'usage_location_ids': active_ids
         }</field>
