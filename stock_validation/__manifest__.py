@@ -15,6 +15,7 @@
         'security/ir.model.access.csv',
         'views/stock_picking_views.xml',
         'views/location_report.xml',
-        'wizard/stock_report_views_wizard.xml'
+        'wizard/stock_report_views_wizard.xml',
+        'wizard/stock_location_report_wizard.xml',
     ],
 }
