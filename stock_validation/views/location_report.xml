@@ -9,8 +9,8 @@
                 <field name="active" invisible="1"/>
 <!--                <field name="show_in_report" invisible="1"/>-->
                 <field name="in_date"/>
-                <field name="filter_init_date"/>
-                <field name="filter_end_date"/>
+                <field name="filter_init_date" invisible="1"/>
+                <field name="filter_end_date" invisible="1"/>
                 <field name="complete_name" string="Location"/>
                 <field name="usage"/>
                 <field name="storage_category_id" attrs="{'readonly': [('usage', '!=', 'internal')]}" groups="stock.group_stock_storage_categories"/>
