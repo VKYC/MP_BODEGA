@@ -9,6 +9,19 @@ class StockMoveLine(models.Model):
     analytic_tag_ids = fields.Many2many('account.analytic.tag', string='Etiquetas Analiticas',
                                         store=True, readonly=False, check_company=True, copy=True)
 
+    @api.onchange('analytic_account_id', 'analytic_tag_ids')
+    def onchange_move_line_ids_without_package(self):
+        move_line_id = self
+        for move_id in self.picking_id.move_ids_without_package:
+            if move_id.product_id == move_line_id.product_id:
+                model_id = (move_id.id or move_id.id.origin)
+                if model_id:
+                    move_id_id = self.env['stock.move'].search([('id', '=', model_id)])
+                    move_id_id.sudo().write({
+                        "analytic_account_id": self.analytic_account_id.id,
+                        "analytic_tag_ids": [(6, 0, self.analytic_tag_ids.ids)]
+                    })
+
     @api.model_create_multi
     def create(self, vals):
         for val in vals:

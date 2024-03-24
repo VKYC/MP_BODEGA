@@ -30,3 +30,17 @@ class StockMove(models.Model):
                         picking_id.qty_on_hand = 0
             else:
                 picking_id.qty_on_hand = 0
+
+    @api.onchange('analytic_account_id', 'analytic_tag_ids')
+    def onchange_move_ids_without_package(self):
+        for move_line_id in (self.picking_id.move_line_nosuggest_ids |
+                             self.picking_id.move_line_ids_without_package |
+                             self.picking_id.move_line_ids):
+            if self.product_id == move_line_id.product_id:
+                model_id = (move_line_id.id or move_line_id.id.origin)
+                if model_id:
+                    line_id = self.env['stock.move.line'].search([('id', '=', model_id)])
+                    line_id.sudo().write({
+                        "analytic_account_id": self.analytic_account_id.id,
+                        "analytic_tag_ids": [(6, 0, self.analytic_tag_ids.ids)]
+                    })

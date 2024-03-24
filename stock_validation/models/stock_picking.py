@@ -5,6 +5,19 @@ from odoo.exceptions import UserError
 class Picking(models.Model):
     _inherit = 'stock.picking'
 
+    def button_validate(self):
+        for move_id in self.move_ids_without_package:
+            if not move_id.analytic_account_id or not move_id.analytic_tag_ids:
+                raise UserError(f"El producto: {move_id.product_id.display_name}, "
+                                f"no tiene cuenta analitica o no tiene etiqueta analitica "
+                                f"en las operaciones")
+        for move_line_id in self.move_line_nosuggest_ids:
+            if not move_line_id.analytic_account_id or not move_line_id.analytic_tag_ids:
+                raise UserError(f"El producto: {move_line_id.product_id.display_name}, "
+                                f"no tiene cuenta analitica o no tiene etiqueta analitica "
+                                f"en las operaciones detalladas")
+        return super(Picking, self).button_validate()
+
     def write(self, vals):
         if 'move_line_ids_without_package' in vals:
             for val in vals['move_line_ids_without_package']:
