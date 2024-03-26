@@ -26,7 +26,7 @@
         <field name="model">stock.location</field>
         <field name="priority" eval="2"/>
         <field name="arch" type="xml">
-            <tree string="Stock Location" decoration-info="usage=='view'" decoration-danger="usage=='internal'" create="false" multi_edit="1">
+            <tree string="Stock Location" decoration-warning="in_date==False">
                 <button name="get_history_moves" string="Ver movimientos" type="object" class="btn btn-primary"/>
                 <field name="active" invisible="1"/>
                 <field name="in_date"/>

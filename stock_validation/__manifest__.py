@@ -9,7 +9,7 @@
     'category': 'Stock',
     'version': '15.0.0.0.2',
 
-    'depends': ['stock', 'stock_analytic'],
+    'depends': ['stock', 'stock_analytic', 'stock_request'],
 
     'data': [
         'security/ir.model.access.csv',

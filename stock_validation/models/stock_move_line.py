@@ -63,3 +63,14 @@ class StockMoveLine(models.Model):
                         picking_id.qty_on_hand = 0
             else:
                 picking_id.qty_on_hand = 0
+
+    @api.model_create_multi
+    def create(self, vals):
+        line_id = super(StockMoveLine, self).create(vals)
+        for move_id in line_id.picking_id.move_ids_without_package:
+            if line_id.product_id == move_id.product_id:
+                line_id.sudo().write({
+                    "analytic_account_id": move_id.analytic_account_id.id,
+                    "analytic_tag_ids": [(6, 0, move_id.analytic_tag_ids.ids)]
+                })
+        return line_id

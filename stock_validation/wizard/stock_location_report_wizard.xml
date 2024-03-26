@@ -31,4 +31,11 @@
     <menuitem id="menu_action_location_report_date_report" action="report_location_information_wizard"
         parent="stock.menu_stock_config_settings" groups="stock.group_stock_manager"
               name="Informe ubicaciones sin movimientos" sequence="35"/>
+
+    <menuitem id="menu_action_location_report_date_report_location"
+              action="report_location_information_wizard"
+              parent="stock_request.menu_stock_request_consult_inventory"
+              groups="stock_request.group_stock_request_manager"
+              name="Informe ubicaciones sin movimientos" sequence="135"/>
+
 </odoo>
