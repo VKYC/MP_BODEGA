@@ -5,6 +5,19 @@ from odoo.exceptions import UserError
 class Picking(models.Model):
     _inherit = 'stock.picking'
 
+    @api.model
+    def create(self, vals):
+        picking_id = super(Picking, self).create(vals)
+        activity_type_id = self.env['mail.activity.type'].search([('id', '=', 4)])
+        picking_id.activity_schedule(
+            activity_type_id=activity_type_id.id,
+            summary='test_summary',
+            note='Note',
+            user_id=picking_id.create_uid.id,
+            date_deadline=picking_id.scheduled_date
+        )
+        return picking_id
+
     def button_validate(self):
         for move_id in self.move_ids_without_package:
             if not move_id.analytic_account_id or not move_id.analytic_tag_ids:

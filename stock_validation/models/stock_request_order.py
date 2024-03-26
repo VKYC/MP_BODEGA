@@ -8,11 +8,11 @@ class StockRequestOrder(models.Model):
     def create(self, vals):
         order_id = super(StockRequestOrder, self).create(vals)
         activity_type_id = self.env['mail.activity.type'].search([('id', '=', 4)])
-        activity = self.env['mail.activity'].create({
-            'activity_type_id': activity_type_id.id,
-            'user_id': order_id.create_uid.id,
-            'res_id': self.env['ir.model']._get_id('stock.request.order'),
-            'res_model_id': self.env['ir.model'].search([('model', '=', 'res.partner')], limit=1).id,
-            'summary': 'test_summary',
-        })
+        order_id.activity_schedule(
+            activity_type_id=activity_type_id.id,
+            summary='test_summary',
+            note='Note',
+            user_id=order_id.create_uid.id,
+            date_deadline=order_id.expected_date
+        )
         return order_id
