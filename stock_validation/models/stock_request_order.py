@@ -1,8 +1,17 @@
 from odoo import api, fields, models
+from datetime import timedelta, datetime
 
 
 class StockRequestOrder(models.Model):
     _inherit = "stock.request.order"
+
+    def _cron_update_terminate_records(self):
+        order_ids = self.env['stock.request.order'].search([])
+        cancel_automatic = self.env['ir.config_parameter'].sudo().get_param('cancel_stock_request_automatic') or False
+        for order_id in order_ids:
+            date_end = order_id.expected_date + timedelta(days=5)
+            if datetime.now() > date_end and order_id.state != 'done' and cancel_automatic:
+                order_id.action_cancel()
 
     @api.model
     def create(self, vals):

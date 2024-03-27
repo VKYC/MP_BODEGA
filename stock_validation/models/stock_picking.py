@@ -29,7 +29,21 @@ class Picking(models.Model):
                 raise UserError(f"El producto: {move_line_id.product_id.display_name}, "
                                 f"no tiene cuenta analitica o no tiene etiqueta analitica "
                                 f"en las operaciones detalladas")
-        return super(Picking, self).button_validate()
+        res = super(Picking, self).button_validate()
+        move_ids = self.env['account.move'].search([('ref', 'ilike', f'{self.name}%')])
+        account_id = self.env['account.analytic.account']
+        tag_ids = self.env['account.analytic.tag']
+        for move_id in move_ids:
+            for line_id in move_id.line_ids:
+                if line_id.analytic_account_id:
+                    account_id = line_id.analytic_account_id
+                if line_id.analytic_account_id:
+                    tag_ids = line_id.analytic_tag_ids
+            for line_id in move_id.line_ids:
+                if account_id and tag_ids:
+                    line_id.analytic_account_id = account_id
+                    line_id.analytic_tag_ids = tag_ids
+        return res
 
     def write(self, vals):
         if 'move_line_ids_without_package' in vals:
