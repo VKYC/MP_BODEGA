@@ -68,10 +68,10 @@ class StockMoveLine(models.Model):
     def create(self, vals):
         line_id = super(StockMoveLine, self).create(vals)
         for move_id in line_id.picking_id.move_ids_without_package:
-            if line_id.product_id == move_id.product_id and move_id.analytic_account_id and\
-                    move_id.analytic_tag_ids:
-                line_id.sudo().write({
-                    "analytic_account_id": move_id.analytic_account_id.id,
-                    "analytic_tag_ids": [(6, 0, move_id.analytic_tag_ids.ids)]
+            if line_id.product_id == move_id.product_id and line_id.analytic_account_id and\
+                    line_id.analytic_tag_ids:
+                move_id.sudo().write({
+                    "analytic_account_id": line_id.analytic_account_id.id,
+                    "analytic_tag_ids": [(6, 0, line_id.analytic_tag_ids.ids)]
                 })
         return line_id
