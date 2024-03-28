@@ -38,7 +38,7 @@ class StockMove(models.Model):
                              self.picking_id.move_line_ids):
             if self.product_id == move_line_id.product_id:
                 model_id = (move_line_id.id or move_line_id.id.origin)
-                if model_id:
+                if model_id and self.analytic_account_id and self.analytic_tag_ids:
                     line_id = self.env['stock.move.line'].search([('id', '=', model_id)])
                     line_id.sudo().write({
                         "analytic_account_id": self.analytic_account_id.id,
