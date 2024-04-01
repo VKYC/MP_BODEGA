@@ -45,6 +45,16 @@ class Picking(models.Model):
                     line_id.sudo().analytic_tag_ids = tag_ids
         return res
 
+    def add_detailed_operation_analytic(self):
+        for picking_id in self:
+            for move_id in picking_id.move_ids_without_package:
+                move_id.onchange_move_ids_without_package()
+
+    def add_operation_analytic(self):
+        for picking_id in self:
+            for move_line_id in picking_id.move_line_ids_without_package:
+                move_line_id.onchange_move_line_ids_without_package()
+
     def write(self, vals):
         if 'move_line_ids_without_package' in vals:
             for val in vals['move_line_ids_without_package']:

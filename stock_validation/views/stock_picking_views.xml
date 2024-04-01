@@ -80,4 +80,20 @@
             </xpath>
         </field>
     </record>
+	<record id="action_compute_set_analytic_account_operations_detailed" model="ir.actions.server">
+    	<field name="name">Agregar cuentas analiticas a Operaciones detalladas</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="code">records.add_detailed_operation_analytic()</field>
+    </record>
+	<record id="action_compute_set_analytic_account_operations" model="ir.actions.server">
+    	<field name="name">Agregar cuentas analiticas a Operaciones</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="code">records.add_operation_analytic()</field>
+    </record>
 </odoo>
