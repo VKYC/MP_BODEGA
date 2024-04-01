@@ -37,7 +37,20 @@ class StockMoveLine(models.Model):
                             val['qty_done'] = 0
                         elif available_qty == qty_done or available_qty <= qty_done:
                             val['qty_done'] = available_qty
-        return super(StockMoveLine, self).create(vals)
+        line_id = super(StockMoveLine, self).create(vals)
+        for move_id in line_id.picking_id.move_ids_without_package:
+            account_id = line_id.analytic_account_id or move_id.analytic_account_id
+            tag_ids = line_id.analytic_tag_ids or move_id.analytic_tag_ids
+            if line_id.product_id == move_id.product_id and account_id and tag_ids:
+                line_id.sudo().write({
+                    "analytic_account_id": account_id.id,
+                    "analytic_tag_ids": [(6, 0, tag_ids.ids)]
+                })
+                move_id.sudo().write({
+                    "analytic_account_id": account_id.id,
+                    "analytic_tag_ids": [(6, 0, tag_ids.ids)]
+                })
+        return line_id
 
     @api.onchange('product_id', 'location_id')
     def compute_qty_on_hand(self):
@@ -63,20 +76,3 @@ class StockMoveLine(models.Model):
                         picking_id.qty_on_hand = 0
             else:
                 picking_id.qty_on_hand = 0
-
-    @api.model_create_multi
-    def create(self, vals):
-        line_id = super(StockMoveLine, self).create(vals)
-        for move_id in line_id.picking_id.move_ids_without_package:
-            account_id = line_id.analytic_account_id or move_id.analytic_account_id
-            tag_ids = line_id.analytic_tag_ids or move_id.analytic_tag_ids
-            if line_id.product_id == move_id.product_id and account_id and tag_ids:
-                line_id.sudo().write({
-                    "analytic_account_id": account_id.id,
-                    "analytic_tag_ids": [(6, 0, tag_ids.ids)]
-                })
-                move_id.sudo().write({
-                    "analytic_account_id": account_id.id,
-                    "analytic_tag_ids": [(6, 0, tag_ids.ids)]
-                })
-        return line_id

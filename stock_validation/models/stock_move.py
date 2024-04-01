@@ -7,6 +7,12 @@ class StockMove(models.Model):
 
     qty_on_hand = fields.Float(compute='compute_qty_on_hand', string='Cantidad disponible')
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super(StockMove, self).create(vals_list)
+        res.onchange_move_ids_without_package()
+        return res
+
     @api.onchange('product_id', 'location_id')
     def compute_qty_on_hand(self):
         for picking_id in self:
