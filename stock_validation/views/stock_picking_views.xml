@@ -18,6 +18,12 @@
                    position="after">
                 <field name="qty_on_hand"/>
             </xpath>
+            <xpath expr="//field[@name='analytic_account_id']" position='attributes'>
+                <attribute name="options">{'no_create': True, 'no_open': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='analytic_tag_ids']" position='attributes'>
+                <attribute name="options">{'no_create': True, 'no_open': True}</attribute>
+            </xpath>
         </field>
     </record>
     <record id="view_stock_move_line_detailed_tree" model="ir.ui.view">
@@ -66,8 +72,12 @@
         />
         <field name="arch" type="xml">
             <field name="analytic_account_id" position="after">
-                <field name="analytic_tag_ids"  widget="many2many_tags"/>
+                <field name="analytic_tag_ids"  widget="many2many_tags"
+                       options="{'no_create': True, 'no_open': True}"/>
             </field>
+            <xpath expr="//field[@name='analytic_account_id']" position='attributes'>
+                <attribute name="options">{'no_create': True, 'no_open': True}</attribute>
+            </xpath>
         </field>
     </record>
     <record id="view_stock_quant_tree_in_date" model="ir.ui.view">
