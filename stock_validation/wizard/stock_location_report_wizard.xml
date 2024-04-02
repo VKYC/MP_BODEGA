@@ -38,4 +38,14 @@
               groups="stock_request.group_stock_request_manager"
               name="Informe ubicaciones sin movimientos" sequence="135"/>
 
+    <menuitem id="menu_action_location_report_date_report_gestion"
+              action="report_location_information_wizard"
+              parent="mp_gestion.mp_gestion_menu_root"
+              name="Informe ubicaciones sin movimientos" sequence="35"/>
+
+    <menuitem id="menu_action_location_report_date_report_location_gestion"
+              action="report_location_information_wizard"
+              parent="stock_validation.menu_action_location_report_date_report_gestion"
+              name="Informe ubicaciones sin movimientos" sequence="135"/>
+
 </odoo>

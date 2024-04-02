@@ -9,7 +9,7 @@
     'category': 'Stock',
     'version': '15.0.0.0.2',
 
-    'depends': ['stock', 'stock_analytic', 'stock_request'],
+    'depends': ['stock', 'stock_analytic', 'stock_request', 'mp_gestion'],
 
     'data': [
         'data/ir_cron_data.xml',
