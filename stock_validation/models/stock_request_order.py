@@ -5,6 +5,18 @@ from datetime import timedelta, datetime
 class StockRequestOrder(models.Model):
     _inherit = "stock.request.order"
 
+    default_analytic_tag_ids = fields.Many2many(comodel_name="account.analytic.tag",
+                                                string='Etiquetas Analiticas por defecto')
+
+    def add_default_account_and_tag_analytic_account(self):
+        for order_id in self:
+            for request_id in order_id.stock_request_ids:
+                item_request_id = self.env['stock.request'].search([('id', '=', request_id.id)])
+                # item_request_id.sudo().analytic_tag_ids = order_id.default_analytic_tag_ids
+                request_id.sudo().write({"analytic_tag_ids": order_id.default_analytic_tag_ids.ids})
+                request_id.sudo().analytic_account_id = order_id.default_analytic_account_id
+                request_id.sudo().invalidate_cache()
+
     def _cron_update_terminate_records(self):
         order_ids = self.env['stock.request.order'].search([])
         cancel_automatic = self.env['ir.config_parameter'].sudo().get_param('cancel_stock_request_automatic') or False

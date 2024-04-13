@@ -15,6 +15,7 @@
         'data/ir_cron_data.xml',
         'security/ir.model.access.csv',
         'views/stock_picking_views.xml',
+        'views/stock_request_order_views.xml',
         'views/res_config_settings_views.xml',
         'views/location_report.xml',
         'wizard/stock_report_views_wizard.xml',
