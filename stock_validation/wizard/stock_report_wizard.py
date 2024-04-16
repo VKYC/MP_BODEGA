@@ -13,7 +13,8 @@ class StockReportWizard(models.TransientModel):
         self = self.with_context(inventory_mode=True, create=False)
         first_day_current_month = self.date_report.replace(day=1)
         last_day_previous_month = first_day_current_month - timedelta(days=1)
-        new_date = last_day_previous_month.replace(day=self.date_report.day)
+        new_date = last_day_previous_month.replace(day=self.date_report.day) \
+            if last_day_previous_month.day >= self.date_report.day else last_day_previous_month
         action = {
             'name': f'Informe analisis inventario: De la fecha'
                     f' {new_date.strftime("%d-%m-%Y")} a {self.date_report.strftime("%d-%m-%Y")}',
