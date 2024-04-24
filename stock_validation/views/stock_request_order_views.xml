@@ -14,6 +14,7 @@
                     string="Agregar cuentas y etiquetas analiticas por defecto"
                     type="object"
                     class="btn btn-primary"
+                    confirm="Seguro de asignar cuentas y etiquetas analiticas por default?"
                 />
             </xpath>
             <xpath expr="//field[@name='stock_request_ids']/tree/field[@name='analytic_tag_ids']"
