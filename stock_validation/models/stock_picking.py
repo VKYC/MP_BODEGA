@@ -5,6 +5,20 @@ from odoo.exceptions import UserError
 class Picking(models.Model):
     _inherit = 'stock.picking'
 
+    default_analytic_tag_ids = fields.Many2many(comodel_name="account.analytic.tag",
+                                                string='Etiquetas Analiticas por defecto')
+    default_analytic_account_id = fields.Many2one(comodel_name='account.analytic.account',
+                                                  string='Cuenta analitica por default')
+
+    def add_default_account_and_tag_analytic_account(self):
+        for picking_id in self:
+            for move_id in picking_id.move_ids_without_package:
+                item_move_id = self.env['stock.move'].search([('id', '=', move_id.id)])
+                # item_move_id.sudo().analytic_tag_ids = picking_id.default_analytic_tag_ids
+                move_id.sudo().write({"analytic_tag_ids": picking_id.default_analytic_tag_ids.ids})
+                move_id.sudo().analytic_account_id = picking_id.default_analytic_account_id
+                move_id.sudo().invalidate_cache()
+                move_id.sudo().onchange_move_ids_without_package()
     @api.model
     def create(self, vals):
         picking_id = super(Picking, self).create(vals)

@@ -41,6 +41,20 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="default_analytic_tag_ids"
+                       options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+                       widget="many2many_tags"/>
+                <field name="default_analytic_account_id"
+                       options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                <button
+                    name="add_default_account_and_tag_analytic_account"
+                    string="Agregar cuentas y etiquetas analiticas por defecto"
+                    type="object"
+                    class="btn btn-primary"
+                    confirm="Seguro de asignar cuentas y etiquetas analiticas por default?"
+                />
+            </xpath>
             <xpath
                 expr="//page[@name='detailed_operations']"
                 position="replace"
