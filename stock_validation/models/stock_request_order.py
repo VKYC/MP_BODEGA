@@ -7,6 +7,13 @@ class StockRequestOrder(models.Model):
 
     default_analytic_tag_ids = fields.Many2many(comodel_name="account.analytic.tag",
                                                 string='Etiquetas Analiticas por defecto')
+    default_route_id = fields.Many2one(comodel_name='stock.location.route', string='Ruta por default')
+
+    def add_default_route(self):
+        for order_id in self:
+            for request_id in order_id.stock_request_ids:
+                request_id.sudo().route_id = order_id.default_route_id
+
 
     def add_default_account_and_tag_analytic_account(self):
         for order_id in self:
