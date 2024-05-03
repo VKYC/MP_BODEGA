@@ -6,7 +6,7 @@ class ResCurrency(models.Model):
     _inherit = "res.currency"
 
     def _cron_update_res_currency(self):
-        db = sql_db.db_connect('procesos')
+        db = sql_db.db_connect('PROCESOS')
 
         with db.cursor() as other_db_cursor:
             today = date.today()
