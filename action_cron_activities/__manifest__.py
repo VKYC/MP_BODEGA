@@ -9,9 +9,10 @@
     'category': 'Settings',
     'version': '15.0.0.0.1',
 
-    'depends': ['base'],
+    'depends': ['base', 'web'],
 
     'data': [
         'data/ir_cron_data.xml',
+        'views/external_layout_standard.xml',
     ],
 }
