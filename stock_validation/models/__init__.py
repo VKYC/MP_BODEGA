@@ -6,3 +6,4 @@ from . import stock_request_order
 from . import res_config_settings
 from . import stock_request
 from . import stock_quant
+from . import stock_location_route

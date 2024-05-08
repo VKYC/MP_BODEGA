@@ -6,6 +6,18 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     qty_on_hand = fields.Float(compute='compute_qty_on_hand', string='Cantidad disponible')
+    route_request_id = fields.Many2one(
+        comodel_name='stock.location.route',
+        string='Rutas',
+        compute='_compute_route_request_ids'
+    )
+
+    def _compute_route_request_ids(self):
+        for move_id in self:
+            print('dsmn')
+            route_ids = self.env['stock.location.route']
+            request_id = self.env['stock.request'].search([('name', '=', move_id.name)])
+            move_id.route_request_id = request_id.route_id
 
     @api.model_create_multi
     def create(self, vals_list):
