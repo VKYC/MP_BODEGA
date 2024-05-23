@@ -9,12 +9,11 @@
     'category': 'purchase',
     'version': '15.0.0.0.1',
 
-    'depends': ['base', 'purchase', 'purchase_requisition'],
+    'depends': ['base', 'purchase', 'purchase_requisition', 'stock'],
 
     'data': [
         'security/purchase_security.xml',
         'security/ir.model.access.csv',
         'views/menu_item_views.xml',
-        # 'views/templates.xml',
     ],
 }
