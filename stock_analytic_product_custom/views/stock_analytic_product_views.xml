@@ -1,0 +1,38 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="view_stock_analytic_product_custom_tree">
+      <field name="name">stock.analytic.product.custom.tree</field>
+      <field name="model">stock.analytic.product.custom</field>
+      <field name="arch" type="xml">
+        <tree create="false" edit="false" delete="false">
+          <field name="product_product_id"/>
+          <field name="default_code"/>
+          <field name="product_name"/>
+          <field name="reference"/>
+          <field name="product_qty"/>
+          <field name="qty_done"/>
+          <field name="scheduled_date"/>
+          <field name="origin_location"/>
+          <field name="destination_location"/>
+          <field name="state"/>
+          <field name="analytic_account"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="action_stock_picking_analytic_product_custom" model="ir.actions.act_window">
+      <field name="name">Análisis por productos</field>
+      <field name="res_model">stock.analytic.product.custom</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="view_stock_analytic_product_tree"/>
+    </record>
+
+    <menuitem
+      id="menu_analytic_product_data"
+      name="Análisis por producto"
+      parent="stock.menu_warehouse_report"
+      sequence="36"
+      action="action_stock_picking_analytic_product_custom"/>
+  </data>
+</odoo>
