@@ -25,7 +25,7 @@
       <field name="res_model">stock.analytic.product.custom</field>
       <field name="type">ir.actions.act_window</field>
       <field name="view_mode">tree,form</field>
-      <field name="view_id" ref="view_stock_analytic_product_tree"/>
+      <field name="view_id" ref="view_stock_analytic_product_custom_tree"/>
     </record>
 
     <menuitem
