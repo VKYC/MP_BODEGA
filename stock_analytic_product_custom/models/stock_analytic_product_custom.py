@@ -11,7 +11,6 @@ class StockAnalyticProduct(models.Model):
     product_name = fields.Char(related='product_product_id.name', string='nombre de producto')
     reference = fields.Many2many('stock.move.line', string='Informacion', compute='_compute_reference', store=True)
     # qty_done = fields.Float(related='reference.product_qty', string='Product Quantity')
-    
 
     @api.depends('product_product_id')
     def _compute_reference(self):

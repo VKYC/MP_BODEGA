@@ -5,12 +5,12 @@
       <field name="model">stock.analytic.product.custom</field>
       <field name="arch" type="xml">
           <form string="Stock Analytic Product Custom">
-              <sheet>
+              <tree>
                   <field name="product_product_id"/>
                   <field name="default_code"/>
                   <field name="product_name"/>
-                  <field name="reference" widget="many2many_tags" options="{'no_create_edit': True}"/>
-              </sheet>
+                  <field name="reference"/>
+              </tree>
           </form>
       </field>
   </record>
