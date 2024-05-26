@@ -1,31 +1,27 @@
 <odoo>
   <data>
-    <record model="ir.ui.view" id="view_stock_analytic_product_custom_tree">
-      <field name="name">stock.analytic.product.custom.tree</field>
+    <record id="view_stock_analytic_product_custom_form" model="ir.ui.view">
+      <field name="name">stock.analytic.product.custom.form</field>
       <field name="model">stock.analytic.product.custom</field>
       <field name="arch" type="xml">
-        <tree create="false" edit="false" delete="false">
-          <field name="product_product_id"/>
-          <field name="default_code"/>
-          <field name="product_name"/>
-          <field name="reference"/>
-          <field name="product_qty"/>
-          <field name="qty_done"/>
-          <field name="scheduled_date"/>
-          <field name="origin_location"/>
-          <field name="destination_location"/>
-          <field name="state"/>
-          <field name="analytic_account"/>
-        </tree>
+          <form string="Stock Analytic Product Custom">
+              <sheet>
+                  <field name="product_product_id"/>
+                  <field name="default_code"/>
+                  <field name="product_name"/>
+                  <field name="reference" widget="many2many_tags" options="{'no_create_edit': True}"/>
+                  <field name="qty_done" invisible="1"/>
+              </sheet>
+          </form>
       </field>
-    </record>
+  </record>
 
     <record id="action_stock_picking_analytic_product_custom" model="ir.actions.act_window">
       <field name="name">Análisis por productos</field>
       <field name="res_model">stock.analytic.product.custom</field>
       <field name="type">ir.actions.act_window</field>
-      <field name="view_mode">tree,form</field>
-      <field name="view_id" ref="view_stock_analytic_product_custom_tree"/>
+      <field name="view_mode">form,tree</field>
+      <field name="view_id" ref="view_stock_analytic_product_custom_form"/>
     </record>
 
     <menuitem

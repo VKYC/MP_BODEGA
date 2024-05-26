@@ -6,7 +6,7 @@
     'website': "",
     'category': 'Stock',
     'version': '15.0.1.0.0',
-    'depends': ['stock','product'],
+    'depends': ['stock','product','account',],
     'data': [
         'security/ir.model.access.csv',
         'views/stock_analytic_product_views.xml',
