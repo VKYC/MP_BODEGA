@@ -6,11 +6,11 @@ class StockAnalyticProduct(models.Model):
     _name = 'stock.analytic.product.custom'
     _description = 'Stock Analytic Product Custom'
 
-    product_product_id = fields.Many2one('product.product', required=True, string='Product')
-    default_code = fields.Char(related='product_product_id.default_code', string='Default Code')
-    product_name = fields.Char(related='product_product_id.name', string='Product Name')
-    reference = fields.Many2many('stock.move.line', string='Reference', compute='_compute_reference', store=True)
-    qty_done = fields.Float(related='reference.product_qty', string='Product Quantity')
+    product_product_id = fields.Many2one('product.product', required=True, string='Producto')
+    default_code = fields.Char(related='product_product_id.default_code', string='Referencia interna')
+    product_name = fields.Char(related='product_product_id.name', string='nombre de producto')
+    reference = fields.Many2many('stock.move.line', string='Informacion', compute='_compute_reference', store=True)
+    # qty_done = fields.Float(related='reference.product_qty', string='Product Quantity')
     
 
     @api.depends('product_product_id')

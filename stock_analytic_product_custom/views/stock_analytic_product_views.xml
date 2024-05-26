@@ -10,7 +10,6 @@
                   <field name="default_code"/>
                   <field name="product_name"/>
                   <field name="reference" widget="many2many_tags" options="{'no_create_edit': True}"/>
-                  <field name="qty_done" invisible="1"/>
               </sheet>
           </form>
       </field>
@@ -20,7 +19,7 @@
       <field name="name">Análisis por productos</field>
       <field name="res_model">stock.analytic.product.custom</field>
       <field name="type">ir.actions.act_window</field>
-      <field name="view_mode">form,tree</field>
+      <field name="view_mode">form</field>
       <field name="view_id" ref="view_stock_analytic_product_custom_form"/>
     </record>
 
