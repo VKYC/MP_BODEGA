@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="template_order_wizard_tree" model="ir.ui.view">
+        <field name="name">stock.order.template.wizard</field>
+        <field name="model">stock.order.template.wizard</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <tree create="false">
+                <header><button name="button_add_template" type="object" string="Selected" class="btn-primary"/>
+                </header>
+            </tree>
+        </field>
+    </record>
+
+</odoo>
