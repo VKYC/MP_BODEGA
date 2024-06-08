@@ -9,6 +9,13 @@ class StockMoveLine(models.Model):
     analytic_tag_ids = fields.Many2many('account.analytic.tag', string='Etiquetas Analiticas',
                                         store=True, readonly=False, check_company=True, copy=True)
 
+    product_standard_price = fields.Float(string='Costo Estándar del Producto', related='product_id.standard_price')
+    product_single_standard_price = fields.Float(string='Costo unitario', related='product_id.standard_price')
+    product_uom_total = fields.Float(string='Cantidad Total de UM del Producto', related='qty_done')
+    total_cost_id = fields.Monetary(string='Costo Total', compute='_compute_total_cost',)
+    currency_id = fields.Many2one('res.currency', string='Moneda', default=lambda self: self.env.user.company_id.currency_id.id)
+
+
     @api.onchange('analytic_account_id', 'analytic_tag_ids')
     def onchange_move_line_ids_without_package(self):
         move_line_id = self
@@ -76,3 +83,8 @@ class StockMoveLine(models.Model):
                         picking_id.qty_on_hand = 0
             else:
                 picking_id.qty_on_hand = 0
+
+    @api.depends('product_standard_price', 'product_uom_total')
+    def _compute_total_cost(self):
+        for record in self:
+            record.total_cost_id = record.product_standard_price * record.product_uom_total
