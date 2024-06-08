@@ -127,15 +127,15 @@
         />
     </record>
     <menuitem
-        id="menu_stock_request_template_order"
-        parent="menu_stock_request_template"
-        name="Solicitudes de existencias"
-        action="stock_request_template_action"
-    />
-    <menuitem
         id="menu_stock_request_template"
         parent="stock_request.menu_stock_request_root"
         name="Plantillas"
         sequence="50"
+    />
+    <menuitem
+        id="menu_stock_request_template_order"
+        parent="menu_stock_request_template"
+        name="Solicitudes de existencias"
+        action="stock_request_template_action"
     />
 </odoo>
