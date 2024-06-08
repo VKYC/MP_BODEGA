@@ -6,8 +6,13 @@
         <field name="priority" eval="1"/>
         <field name="arch" type="xml">
             <tree create="false">
-                <header><button name="button_add_template" type="object" string="Selected" class="btn-primary"/>
-                </header>
+                <field name="order_id" invisible="1"/>
+                <field name="template_id"/>
+                <field name="code"/>
+                <field name="description"/>
+                <button name="button_add_template"
+                        type="object" string="Usar plantilla"
+                        class="btn-primary"/>
             </tree>
         </field>
     </record>

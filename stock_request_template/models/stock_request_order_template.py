@@ -90,7 +90,7 @@ class StockRequestOrderTemplate(models.Model):
                 line.warehouse_id = self.warehouse_id
                 line.location_id = self.location_id
                 line.company_id = self.company_id
-                line.picking_policy = self.picking_policy
+                # line.picking_policy = self.picking_policy
                 # line.expected_date = self.expected_date
                 # line.requested_by = self.requested_by
                 # line.procurement_group_id = self.procurement_group_id
