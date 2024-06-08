@@ -28,7 +28,7 @@ class StockRequestOrder(models.Model):
         order_ids = self.env['stock.request.order'].search([])
         cancel_automatic = self.env['ir.config_parameter'].sudo().get_param('cancel_stock_request_automatic') or False
         for order_id in order_ids:
-            date_end = order_id.expected_date + timedelta(days=5)
+            date_end = order_id.expected_date + timedelta(days=4)
             if datetime.now() > date_end and order_id.state != 'done' and cancel_automatic:
                 order_id.action_cancel()
 
