@@ -5,9 +5,10 @@ class StockRequestOrderTemplate(models.Model):
     _name = "stock.request.order.template"
     _description = "Stock request template"
 
-    name = fields.Char(string='Identificador')
-    code = fields.Char(string='Codigo')
-    description = fields.Text(string='Descripcion')
+    name = fields.Char(string='Identificador', required=True)
+    code = fields.Char(string='Codigo', default='/', copy=False, index=True,
+                       readonly=True)
+    description = fields.Text(string='Descripcion', required=True)
     company_id = fields.Many2one(
         "res.company",
         "Company",
@@ -57,6 +58,13 @@ class StockRequestOrderTemplate(models.Model):
         required=True,
     )
 
+    @api.model
+    def create(self, vals):
+        sequence = self.env['ir.sequence'].sudo().next_by_code('stock_request_order_template')
+        if vals.get('code', '/') == '/':
+            vals['code'] = sequence + " - " + vals['name']
+        return super(StockRequestOrderTemplate, self).create(vals)
+
     @api.onchange("warehouse_id")
     def onchange_warehouse_id(self):
         if self.warehouse_id:
@@ -78,10 +86,8 @@ class StockRequestOrderTemplate(models.Model):
     def add_default_account_and_tag_analytic_account(self):
         for order_id in self:
             for request_id in order_id.line_ids:
-                # item_request_id = self.env['stock.request.order.template.line'].search([('id', '=', request_id.id)])
-                # item_request_id.sudo().analytic_tag_ids = order_id.default_analytic_tag_ids
                 request_id.sudo().write({"analytic_tag_ids": order_id.default_analytic_tag_ids.ids})
-                request_id.sudo().analytic_account_id = order_id.default_analytic_account_id
+                request_id.sudo().analytic_account_id = order_id.analytic_account_id
                 request_id.sudo().invalidate_cache()
 
     def change_childs(self):

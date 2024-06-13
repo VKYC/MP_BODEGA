@@ -7,6 +7,7 @@
     'version': '15.0.0.0.1',
     'depends': ['stock_request'],
     'data': [
+        'data/stock_request_order_template_sequence_data.xml',
         'security/state_template_user.xml',
         'security/ir.model.access.csv',
         'views/stock_request_order_template_views.xml',

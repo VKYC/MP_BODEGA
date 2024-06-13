@@ -50,9 +50,19 @@ class StockRequestOrderTemplateLine(models.Model):
                                         string='Etiquetas Analiticas por defecto')
     product_uom_qty = fields.Float(
         "Cantidad",
-        digits="Product Unit of Measure",
         required=True,
+        default=1
     )
+
+    @api.onchange("product_uom_qty")
+    def onchange_product_uom_qty(self):
+        if self.product_uom_qty <= 0:
+            raise ValidationError('La cantidad del producto deberia de ser positivo')
+
+    @api.onchange("location_id")
+    def onchange_location_id(self):
+        if self and self.template_id.location_id != self.location_id:
+            raise ValidationError('La ubicación debe ser igual al pedido.')
 
     @api.depends("product_id", "warehouse_id", "location_id")
     @api.onchange("product_id", "warehouse_id", "location_id")

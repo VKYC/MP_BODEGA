@@ -25,6 +25,8 @@ class StockOrderTemplateWizard(models.TransientModel):
 
         for line_id in template_id.line_ids:
             self.env['stock.request'].create({
+                'warehouse_id': template_id.warehouse_id.id,
+                'location_id': template_id.location_id.id,
                 'order_id': order_id.id,
                 'product_id': line_id.product_id.id,
                 'product_uom_id': line_id.product_id.uom_id.id,
