@@ -16,7 +16,7 @@ class StockMove(models.Model):
     product_single_standard_price = fields.Float(string='Costo unitario', related='product_id.standard_price')
     product_uom_total = fields.Float(string='Cantidad total de UM del producto', related='product_uom_qty')
     total_cost_id = fields.Monetary(string='Costo total', compute='_compute_total_cost',)
-    currency_id = fields.Many2one('res.currency', string='Moneda', default=lambda self: self.env.user.company_id.currency_id.id)
+    currency_id = fields.Many2one('res.currency', string='Moneda', default=lambda self: self.env.user.company_id.currency_id)
 
     def _compute_route_request_ids(self):
         for move_id in self:
