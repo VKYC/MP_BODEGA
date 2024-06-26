@@ -41,6 +41,8 @@
                                     <th>Unidad de medida</th>
                                     <th>Ruta</th>
                                     <th>Cantidad</th>
+                                    <th>Cantidad Disponible</th>
+                                    <th>Cantidad Hecha</th>
                                     <th>Estatus en inventario</th>
                                 </tr>
                             </thead>
@@ -51,6 +53,8 @@
                                         <td><t t-esc="line_id.product_uom_id.display_name"/></td>
                                         <td><t t-esc="line_id.route_id.display_name"/></td>
                                         <td><t t-esc="line_id.product_uom_qty"/></td>
+                                        <td><t t-esc="line_id.location_src_qty_available"/></td>
+                                        <td><t t-esc="line_id.qty_done"/></td>
                                         <td><t t-esc="line_id.product_stock_state"/></td>
                                     </tr>
                                 </t>
