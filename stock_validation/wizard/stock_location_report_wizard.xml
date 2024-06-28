@@ -20,6 +20,12 @@
         </field>
     </record>
 
+    <menuitem id="menu_action_location_report_date_report_location"
+              action="report_location_information_wizard"
+              parent="stock_request.menu_stock_request_consult_inventory"
+              groups="stock_request.group_stock_request_manager"
+              name="Informe ubicaciones sin movimientos" sequence="135"/>
+
     <record id="report_location_information_wizard" model="ir.actions.act_window">
         <field name="name">Informe ubicaciones sin movimientos</field>
         <field name="type">ir.actions.act_window</field>
@@ -40,12 +46,6 @@
     <menuitem id="menu_action_location_report_date_report_location_gestion"
               action="report_location_information_wizard"
               parent="stock_validation.menu_action_location_report_date_report_gestion"
-              name="Informe ubicaciones sin movimientos" sequence="135"/>
-
-    <menuitem id="menu_action_location_report_date_report_location"
-              action="report_location_information_wizard"
-              parent="stock_request.menu_stock_request_consult_inventory"
-              groups="stock_request.group_stock_request_manager"
               name="Informe ubicaciones sin movimientos" sequence="135"/>
 
 </odoo>
